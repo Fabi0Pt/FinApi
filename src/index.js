@@ -86,7 +86,7 @@ app.post('/deposit', verifyIfExistsAccountCPF, (request, response) => {
     description,
     amount,
     created_at: new Date(),
-    type: 'Credit'
+    type: 'credit'
   }
 
   customer.statement.push(statementOperation)
