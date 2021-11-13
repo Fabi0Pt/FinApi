@@ -1,5 +1,5 @@
 /** Importando express */
-const { response } = require('express')
+const { response, request } = require('express')
 const express = require('express')
 
 /**Gerador de ID UUID V4 */
@@ -129,4 +129,36 @@ app.get('/statement/date', verifyIfExistsAccountCPF, (request, response) => {
   )
   return response.json(statement)
 })
+/** atualizar dados do client */
+app.put('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { name } = request.body
+  const { customer } = request
+
+  customer.name = name
+  return response.status(201).send()
+})
+/**Retonar dados da conta */
+app.get('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+
+  return response.json(customer)
+})
+
+/**Deletar conta */
+app.delete('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+
+  /**Splice */
+  customers.splice(customer, 1)
+
+  return response.status(200).json(customers)
+})
+
+app.get('/balance', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request
+  const balance = getBalance(customer.statement)
+
+  return response.json(balance)
+})
+
 app.listen(3333)
